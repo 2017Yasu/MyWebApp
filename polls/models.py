@@ -1,4 +1,7 @@
+import datetime
+
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -16,6 +19,28 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
 
+    def was_published_recently(self) -> bool:
+        """
+        Whether this question was published recently.
+
+        Returns
+        -------
+        bool
+            true if this question was published within 1 day.
+        """
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+
+    def __str__(self) -> str:
+        """
+        Generate question text
+
+        Returns
+        -------
+        str
+            Question text string
+        """
+        return self.question_text
+
 class Choice(models.Model):
     """
     Choice of a question.
@@ -32,3 +57,14 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        """
+        Generate choice text
+
+        Returns
+        -------
+        str
+            Choice text string
+        """
+        return self.choice_text
