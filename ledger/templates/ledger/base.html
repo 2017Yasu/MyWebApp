@@ -1,0 +1,26 @@
+{% load static %}
+<html>
+
+<head>
+    <title>5分で作ったWebサイト</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <p>とにかくいい感じの固定サイドバー</p>
+        <h1>5分で作ったWebサイト</h1>
+        <div id="pageitem">
+            {% include 'ledger/pagelist.html' %}
+        </div>
+    </nav>
+    <header>
+        <p>ついでに</p>
+        <p>ヘッダーも作ろう</p>
+    </header>
+    {% block content %}{% endblock %}
+</body>
+
+</html>
