@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 
 from .models import *
 
@@ -40,7 +40,12 @@ def detail(request, question_id):
     HttpResponse
         Http response
     """
-    return HttpResponse("You are looking at question %s." % question_id)
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exit")
+
+    return render(request, 'polls/detail.html', {'question': question})
 
 def results(request, question_id):
     """
