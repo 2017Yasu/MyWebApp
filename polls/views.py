@@ -44,25 +44,6 @@ def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/detail.html', {'question': question})
 
-def results(request, question_id):
-    """
-    View for displaying the result of a specified question.
-
-    Parameters
-    ----------
-    request : HttpRequest
-        Http request.
-    question_id : int
-        Question ID.
-
-    Returns
-    -------
-    HttpResponse
-        Http response
-    """
-    response = "You are looking at the result of question %s."
-    return HttpResponse(response % question_id)
-
 def vote(request, question_id):
     """
     View for voting on a specified question.
@@ -97,5 +78,20 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 def results(request, question_id):
+    """
+    View for displaying the result of a specified question.
+
+    Parameters
+    ----------
+    request : HttpRequest
+        Http request.
+    question_id : int
+        Question ID.
+
+    Returns
+    -------
+    HttpResponse
+        Http response
+    """
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/results.html', {'question': question})
