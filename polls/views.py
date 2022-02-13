@@ -1,48 +1,64 @@
+import django
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views import generic
+from matplotlib.pyplot import cla
 
 from .models import *
 
-# Create your views here.
-def index(request):
+class IndexView(generic.ListView):
     """
-    Index page.
+    Index view class.
 
-    Parameters
+    Attributes
     ----------
-    request : HttpRequest
-        Http request.
-
-    Returns
-    -------
-    HttpResponse
-        Http response
+    template_name : str
+        Template name.
+    context_object_name : str
+        Context object name
     """
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {
-        'latest_question_list': latest_question_list,
-    }
-    return render(request, 'polls/index.html', context)
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
 
-def detail(request, question_id):
+    def get_queryset(self):
+        """
+        Return the last five published questions.
+
+        Returns
+        -------
+        django.db.models.query.QuerySet
+            The lastest five published questions.
+        """
+        return Question.objects.order_by('-pub_date')[:5]
+
+class DetailView(generic.DetailView):
     """
-    View for displaying question text and vote form.
+    Detail view class.
 
-    Parameters
+    Attributes
     ----------
-    request : HttpRequest
-        Http request.
-    question_id : int
-        Question ID.
-
-    Returns
-    -------
-    HttpResponse
-        Http response
+    template_name : str
+        Template name.
+    model: : class
+        Class of the model
     """
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {'question': question})
+    model = Question
+    template_name = 'polls/detail.html'
+
+class ResultsView(generic.DetailView):
+    """
+    Result view class.
+
+    Attributes
+    ----------
+    template_name : str
+        Template name.
+    model: : class
+        Class of the model
+    """
+    model = Question
+    template_name = 'polls/results.html'
 
 def vote(request, question_id):
     """
@@ -76,22 +92,3 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-
-def results(request, question_id):
-    """
-    View for displaying the result of a specified question.
-
-    Parameters
-    ----------
-    request : HttpRequest
-        Http request.
-    question_id : int
-        Question ID.
-
-    Returns
-    -------
-    HttpResponse
-        Http response
-    """
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/results.html', {'question': question})
