@@ -4,7 +4,7 @@ from django.contrib import admin
 # Register your models here.
 from .models import *
 
-class ChoiceInline(admin.StackedInline):
+class ChoiceInline(admin.TabularInline):
     model = Choice
     extra = 3
 
