@@ -28,7 +28,8 @@ class Question(models.Model):
         bool
             true if this question was published within 1 day.
         """
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
     def __str__(self) -> str:
         """
