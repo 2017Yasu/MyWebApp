@@ -14,7 +14,7 @@ Personal ledger application
 | category_id      | int      |  false   |
 | description      | string   |   true   |
 | source_id        | int      |  false   |
-| target_id        | int      |   true   |
+| target_id        | int      |  false   |
 | payment_type     | int      |   true   |
 | is_credit        | boolean  |  false   |
 
