@@ -6,17 +6,17 @@ Personal ledger application
 
 ### Transaction
 
-| Name         | Type     | Nullable |
-| :----------- | :------- | :------: |
-| id           | int      |  false   |
-| date         | datetime |  false   |
-| amount       | int      |  false   |
-| category_id  | int      |  false   |
-| description  | string   |   true   |
-| source_id    | int      |  false   |
-| target_id    | int      |   true   |
-| payment_type | int      |   true   |
-| is_credit    | boolean  |  false   |
+| Name             | Type     | Nullable |
+| :--------------- | :------- | :------: |
+| id               | int      |  false   |
+| transaction_date | datetime |  false   |
+| amount           | int      |  false   |
+| category_id      | int      |  false   |
+| description      | string   |   true   |
+| source_id        | int      |  false   |
+| target_id        | int      |   true   |
+| payment_type     | int      |   true   |
+| is_credit        | boolean  |  false   |
 
 ### Category
 
